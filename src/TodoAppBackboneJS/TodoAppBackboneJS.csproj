@@ -133,6 +133,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305231420047_InitialCreate.cs" />
+    <Compile Include="Migrations\201305231420047_InitialCreate.Designer.cs">
+      <DependentUpon>201305231420047_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307141845442_teste.cs" />
+    <Compile Include="Migrations\201307141845442_teste.Designer.cs">
+      <DependentUpon>201307141845442_teste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Models\TodoAppBackboneJSContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +182,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201305231420047_InitialCreate.resx">
+      <DependentUpon>201305231420047_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307141845442_teste.resx">
+      <DependentUpon>201307141845442_teste.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

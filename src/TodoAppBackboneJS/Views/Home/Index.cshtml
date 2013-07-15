@@ -1,35 +1,28 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>TDC 2013 Floripa!!!</title>
-    <style>
-        .done {
-            text-decoration: line-through;
-
-        }
-    </style>
+    <title></title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-responsive.css" rel="stylesheet" />
-    
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
     <script src="~/Scripts/jquery-1.9.1.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/underscore.js"></script>
     <script src="~/Scripts/backbone.js"></script>
+  
     <script>
         var App = {
             Views: {},
             Collections: {},
             Models: {},
-            start: function() {
-                
+            start: function () {
+
                 Backbone.history.start();
                 var router = new App.Router();
-            }
+        }
         };
-        
-        //model
-        App.Models.Todo = Backbone.Model.extend({
+
+        App.Models.Todo = Backbone.Model.extend(
+        {
+            urlRoot:"/api/todo",   
             defaults: {
                 "status": "incomplete"
             },
@@ -43,12 +36,10 @@
                 this.save();
             }
         });
-        
         App.Collections.Todo = Backbone.Collection.extend({
             model: App.Models.Todo,
             url: "/api/todo"
         });
-        
         App.Views.Todo = Backbone.View.extend({
             initialize: function () {
                 this.model.on("change", this.render, this);
@@ -64,7 +55,6 @@
                 return this;
             }
         });
-        
         App.Views.Todos = Backbone.View.extend({
             initialize: function () {
                 this.listenTo(this.collection, "add", this.addOne, this);
@@ -72,7 +62,9 @@
             },
             tagName: "ul",
             render: function (data) {
-                if (data) this.collection = data;
+                if (data) {
+                    this.collection = data;
+                }
                 this.$el.empty();
                 this.collection.forEach(this.addOne, this);
                 return this;
@@ -82,25 +74,23 @@
                 this.$el.append(todoView.render().el);
             }
         });
-        
         App.Views.AddTodo = Backbone.View.extend({
             tagName: "form",
-            template: _.template("<input type='text' placeholder='Todo' /><button class='btn'>Inserir</button>"),
-            render: function () {
-                this.$el.html(this.template());
-                return this;
-            },
-            events: {
-                "submit": "criaTodo"
-            },
+                events: {
+                    "submit": "criaTodo"
+                },
             criaTodo: function (e) {
                 e.preventDefault();
                 var input = this.$el.find("input");
                 this.collection.create({ description: input.val() });
                 input.val("");
+            },
+            template: _.template("<input type='text' placeholder='Todo' /><button class='btn'>Inserir</button>"),
+            render: function () {
+                this.$el.html(this.template());
+                return this;
             }
         });
-
         App.Router = Backbone.Router.extend({
             initialize: function () {
                 App.Collections.todos = new App.Collections.Todo({ model: App.Models.Todo });
@@ -124,14 +114,13 @@
                 App.Views.todos.render(App.Collections.todos.where({ status: 'incomplete' }));
             }
         });
-        $(function () {
+        $(function() {
+
             App.start();
-        });
-        
-    </script>
+        })
+        ;</script>
 </head>
 <body>
-
     <div class="container ">
         <div class="row span6 offset3">
             <div class="navbar navbar-inverse  ">
@@ -164,6 +153,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
